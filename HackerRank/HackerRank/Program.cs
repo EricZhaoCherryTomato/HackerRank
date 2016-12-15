@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HackerRank
 {
@@ -8,29 +7,88 @@ namespace HackerRank
     {
         public static List<int> base2 = new List<int>();
 
-        private static void Main(string[] args)
+        private static void Main()
         {
-            int[][] arr = new int[6][];
-            for (int arr_i = 0; arr_i < 6; arr_i++)
+            var inputs = Console.ReadLine().Split();
+            var firstName = inputs[0];
+            var lastName = inputs[1];
+            var id = Convert.ToInt32(inputs[2]);
+            var numScores = Convert.ToInt32(Console.ReadLine());
+            inputs = Console.ReadLine().Split();
+            var scores = new int[numScores];
+            for (var i = 0; i < numScores; i++)
             {
-                string[] arr_temp = Console.ReadLine().Split(' ');
-                arr[arr_i] = Array.ConvertAll(arr_temp, Int32.Parse);
+                scores[i] = Convert.ToInt32(inputs[i]);
             }
 
-            var sum = new List<int>();
+            var s = new Student(firstName, lastName, id, scores);
+            s.printPerson();
+            Console.WriteLine("Grade: " + s.Calculate() + "\n");
+        }
 
-            for (int i = 0; i < 6; i++)
+        private class Student : Person
+        {
+            private readonly int[] _testScores;
+
+            public Student(string firstName, string lastName, int identification, int[] scores) : base(firstName, lastName, identification)
             {
-                for (int j = 0; j < 6; j++)
+                _testScores = scores;
+            }
+
+            public string Calculate()
+            {
+                var r = new int();
+                foreach (int t in _testScores)
                 {
-                    var r = arr[i][j] + arr[i][j + 1] + arr[i][j + 2]
-                            + arr[i + 1][j + 1]
-                            + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2];
-                    sum.Add(r);
+                    r += t;
                 }
+                var average = r/_testScores.Length;
+                if (average <= 100 && average >= 90)
+                {
+                    return "O";
+                }
+                if (average < 90 && average >= 80)
+                {
+                    return "E";
+                }
+                if (average < 80 && average >= 70)
+                {
+                    return "A";
+                }
+                if (average < 70 && average >= 55)
+                {
+                    return "P";
+                }
+                if (average < 55 && average >= 40)
+                {
+                    return "D";
+                }
+
+                return "T";
             }
-            sum.Sort();
-            Console.WriteLine(sum[sum.Count-1]);
+        }
+
+        private class Person
+        {
+            protected readonly string firstName;
+            protected readonly string lastName;
+            protected readonly int id;
+
+            public Person()
+            {
+            }
+
+            public Person(string firstName, string lastName, int identification)
+            {
+                this.firstName = firstName;
+                this.lastName = lastName;
+                id = identification;
+            }
+
+            public void printPerson()
+            {
+                Console.WriteLine("Name: " + lastName + ", " + firstName + "\nID: " + id);
+            }
         }
     }
 }
