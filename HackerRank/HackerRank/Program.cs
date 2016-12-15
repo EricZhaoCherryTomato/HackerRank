@@ -10,36 +10,27 @@ namespace HackerRank
 
         private static void Main(string[] args)
         {
-            var n = Convert.ToInt32(Console.ReadLine());
-
-            var r = DecimalToBase2(n);
-
-            var index = 1;
-            var counter = new List<int>();
-            for (var i = 1; i < r.Count; i++)
+            int[][] arr = new int[6][];
+            for (int arr_i = 0; arr_i < 6; arr_i++)
             {
-                if (r[i] - r[i - 1] == 0)
+                string[] arr_temp = Console.ReadLine().Split(' ');
+                arr[arr_i] = Array.ConvertAll(arr_temp, Int32.Parse);
+            }
+
+            var sum = new List<int>();
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
                 {
-                    index++;
-                    counter.Add(index);
-                }
-                else
-                {
-                    counter.Add(index);
-                    index = 1;
+                    var r = arr[i][j] + arr[i][j + 1] + arr[i][j + 2]
+                            + arr[i + 1][j + 1]
+                            + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2];
+                    sum.Add(r);
                 }
             }
-            Console.WriteLine(counter.Max());
-        }
-
-        public static List<int> DecimalToBase2(int n)
-        {
-            if (n != 0)
-            {
-                base2.Add(n%2 != 0 ? 1 : 0);
-                return DecimalToBase2(n/2);
-            }
-            return base2;
+            sum.Sort();
+            Console.WriteLine(sum[sum.Count-1]);
         }
     }
 }
