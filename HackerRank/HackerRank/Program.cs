@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Schema;
 
 namespace HackerRank
 {
@@ -9,45 +11,33 @@ namespace HackerRank
 
         private static void Main()
         {
-            var title = Console.ReadLine();
-            var author = Console.ReadLine();
-            var price = int.Parse(Console.ReadLine());
-            Book new_novel = new MyBook(title, author, price);
-            new_novel.display();
+            Convert.ToInt32(Console.ReadLine());
+
+            int[] a = Console.ReadLine().Split(' ').Select(x => Convert.ToInt32(x)).ToArray();
+
+            Difference d = new Difference(a);
+
+            d.ComputeDifference();
+
+            Console.Write(d.maximumDifference);
+
+
         }
 
-        internal abstract class Book
+        private class Difference
         {
-            protected string title;
-            protected string author;
+            private int[] _elements;
+            public int maximumDifference;
 
-            public Book(string t, string a)
+            public Difference(int[] a)
             {
-                title = t;
-                author = a;
+                _elements = a;
             }
 
-            public abstract void display();
-        }
-
-        private class MyBook : Book
-        {
-            private readonly string _title;
-            private readonly string _author;
-            private readonly int _price;
-
-            public MyBook(string title, string author, int price) : base(title, author)
+            public void ComputeDifference()
             {
-                _title = title;
-                _author = author;
-                _price = price;
-            }
-
-            public override void display()
-            {
-                Console.WriteLine("Title: " + _title);
-                Console.WriteLine("Author: " + _author);
-                Console.WriteLine("Price: " + _price);
+                var r = new List<int>();
+                maximumDifference = Math.Abs(_elements.Max()-_elements.Min());
             }
         }
     }
