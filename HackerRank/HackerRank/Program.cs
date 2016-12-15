@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Schema;
 
 namespace HackerRank
 {
@@ -11,33 +10,52 @@ namespace HackerRank
 
         private static void Main()
         {
-            Convert.ToInt32(Console.ReadLine());
+            Node head = null;
+            int T = Int32.Parse(Console.ReadLine());
+            while (T-- > 0)
+            {
+                int data = Int32.Parse(Console.ReadLine());
+                head = insert(head, data);
+            }
+            display(head);
+        }
 
-            int[] a = Console.ReadLine().Split(' ').Select(x => Convert.ToInt32(x)).ToArray();
-
-            Difference d = new Difference(a);
-
-            d.ComputeDifference();
-
-            Console.Write(d.maximumDifference);
-
+        public static Node insert(Node head, int data)
+        {
+            if (head == null)
+            {
+                return new Node(data);
+            }
+            if (head.next == null)
+            {
+                head.next = new Node(data);
+            }
+            else
+            {
+                insert(head.next, data);
+            }
+            return head;
 
         }
 
-        private class Difference
+        internal class Node
         {
-            private int[] _elements;
-            public int maximumDifference;
-
-            public Difference(int[] a)
+            public int data;
+            public Node next;
+            public Node(int d)
             {
-                _elements = a;
+                data = d;
+                next = null;
             }
 
-            public void ComputeDifference()
+        }
+        public static void display(Node head)
+        {
+            Node start = head;
+            while (start != null)
             {
-                var r = new List<int>();
-                maximumDifference = Math.Abs(_elements.Max()-_elements.Min());
+                Console.Write(start.data + " ");
+                start = start.next;
             }
         }
     }
