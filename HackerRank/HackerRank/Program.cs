@@ -9,85 +9,45 @@ namespace HackerRank
 
         private static void Main()
         {
-            var inputs = Console.ReadLine().Split();
-            var firstName = inputs[0];
-            var lastName = inputs[1];
-            var id = Convert.ToInt32(inputs[2]);
-            var numScores = Convert.ToInt32(Console.ReadLine());
-            inputs = Console.ReadLine().Split();
-            var scores = new int[numScores];
-            for (var i = 0; i < numScores; i++)
-            {
-                scores[i] = Convert.ToInt32(inputs[i]);
-            }
-
-            var s = new Student(firstName, lastName, id, scores);
-            s.printPerson();
-            Console.WriteLine("Grade: " + s.Calculate() + "\n");
+            var title = Console.ReadLine();
+            var author = Console.ReadLine();
+            var price = int.Parse(Console.ReadLine());
+            Book new_novel = new MyBook(title, author, price);
+            new_novel.display();
         }
 
-        private class Student : Person
+        internal abstract class Book
         {
-            private readonly int[] _testScores;
+            protected string title;
+            protected string author;
 
-            public Student(string firstName, string lastName, int identification, int[] scores) : base(firstName, lastName, identification)
+            public Book(string t, string a)
             {
-                _testScores = scores;
+                title = t;
+                author = a;
             }
 
-            public string Calculate()
-            {
-                var r = new int();
-                foreach (int t in _testScores)
-                {
-                    r += t;
-                }
-                var average = r/_testScores.Length;
-                if (average <= 100 && average >= 90)
-                {
-                    return "O";
-                }
-                if (average < 90 && average >= 80)
-                {
-                    return "E";
-                }
-                if (average < 80 && average >= 70)
-                {
-                    return "A";
-                }
-                if (average < 70 && average >= 55)
-                {
-                    return "P";
-                }
-                if (average < 55 && average >= 40)
-                {
-                    return "D";
-                }
-
-                return "T";
-            }
+            public abstract void display();
         }
 
-        private class Person
+        private class MyBook : Book
         {
-            protected readonly string firstName;
-            protected readonly string lastName;
-            protected readonly int id;
+            private readonly string _title;
+            private readonly string _author;
+            private readonly int _price;
 
-            public Person()
+            public MyBook(string title, string author, int price) : base(title, author)
             {
+                _title = title;
+                _author = author;
+                _price = price;
             }
 
-            public Person(string firstName, string lastName, int identification)
+            public override void display()
             {
-                this.firstName = firstName;
-                this.lastName = lastName;
-                id = identification;
-            }
-
-            public void printPerson()
-            {
-                Console.WriteLine("Name: " + lastName + ", " + firstName + "\nID: " + id);
+                Console.WriteLine("Title: " + _title);
+                Console.WriteLine("Author: " + _author);
+                Console.WriteLine("Price: " + _price);
             }
         }
     }
