@@ -9,18 +9,36 @@ namespace HackerRank
 
         private static void Main()
         {
-            string S = Console.ReadLine();
-            try
+            var myCalculator = new Calculator();
+            var T = int.Parse(Console.ReadLine());
+            while (T-- > 0)
             {
-                var r = Convert.ToInt32(S);
-                Console.WriteLine(r);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Bad String");
-               
+                var num = Console.ReadLine().Split();
+                var n = int.Parse(num[0]);
+                var p = int.Parse(num[1]);
+                try
+                {
+                    var ans = myCalculator.power(n, p);
+                    Console.WriteLine(ans);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
-       
+    }
+
+    internal class Calculator
+    {
+        public int power(int i, int i1)
+        {
+            if (i < 0 || i1 < 0)
+            {
+                throw new Exception("n and p should be non-negative");
+            }
+            var r = Math.Pow(i, i1);
+            return (int)r;
+        }
     }
 }
