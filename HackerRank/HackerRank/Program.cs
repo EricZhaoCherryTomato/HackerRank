@@ -8,72 +8,33 @@ namespace HackerRank
     {
         private static void Main()
         {
-            // read the string s.
-            string s = Console.ReadLine();
+            int n = Int32.Parse(Console.ReadLine());
+            AdvancedArithmetic myCalculator = new Calculator();
+            int sum = myCalculator.divisorSum(n);
+            Console.WriteLine("I implemented: AdvancedArithmetic\n" + sum);
+        }
 
-            // create the Solution class object p.
-            Solution obj = new Solution();
+        public interface AdvancedArithmetic
+        {
+            int divisorSum(int n);
+        }
 
-            // push/enqueue all the characters of string s to stack.
-            foreach (char c in s)
+        private class Calculator : AdvancedArithmetic
+        {
+            public int divisorSum(int n)
             {
-                obj.pushCharacter(c);
-                obj.enqueueCharacter(c);
-            }
-
-            bool isPalindrome = true;
-
-            // pop the top character from stack.
-            // dequeue the first character from queue.
-            // compare both the characters.
-            for (int i = 0; i < s.Length / 2; i++)
-            {
-                if (obj.popCharacter() != obj.dequeueCharacter())
+                int sum = 0;
+                for (int i = 1; i <= n; i++)
                 {
-                    isPalindrome = false;
-
-                    break;
+                    if (n%i == 0)
+                    {
+                        sum += i;
+                    }
                 }
-            }
-
-            // finally print whether string s is palindrome or not.
-            if (isPalindrome)
-            {
-                Console.Write("The word, {0}, is a palindrome.", s);
-            }
-            else
-            {
-                Console.Write("The word, {0}, is not a palindrome.", s);
+                return sum;
             }
         }
     }
 
-    class Solution
-    {
-        private Stack<char> _stack = new Stack<char>();
-        private Queue<char> _queue = new Queue<char>();
-        public void pushCharacter(char c)
-        {
-            _stack.Push(c);
-        }
-
-        public void enqueueCharacter(char c)
-        {
-            _queue.Enqueue(c);
-        }
-
-        public char popCharacter()
-        {
-            var temp = _stack.Peek();
-            _stack.Pop();
-            return temp;
-        }
-
-        public char dequeueCharacter()
-        {
-            var temp = _queue.Peek();
-            _queue.Dequeue();
-            return temp;
-        }
-    }
+    
 }
