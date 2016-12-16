@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HackerRank
 {
@@ -8,33 +6,41 @@ namespace HackerRank
     {
         private static void Main()
         {
-            int n = Int32.Parse(Console.ReadLine());
-            AdvancedArithmetic myCalculator = new Calculator();
-            int sum = myCalculator.divisorSum(n);
-            Console.WriteLine("I implemented: AdvancedArithmetic\n" + sum);
-        }
-
-        public interface AdvancedArithmetic
-        {
-            int divisorSum(int n);
-        }
-
-        private class Calculator : AdvancedArithmetic
-        {
-            public int divisorSum(int n)
+            int n = Convert.ToInt32(Console.ReadLine());
+            string[] a_temp = Console.ReadLine().Split(' ');
+            int[] a = Array.ConvertAll(a_temp, Int32.Parse);
+            int sum = 0;
+            for (int i = 0; i < a.Length; i++)
             {
-                int sum = 0;
-                for (int i = 1; i <= n; i++)
+                
+                for (int j = 0; j < a.Length-1; j++)
                 {
-                    if (n%i == 0)
+                    if (a[j] > a[j+1])
                     {
-                        sum += i;
+                        Swap(ref a[j], ref a[j+1]);
+                        sum++;
                     }
                 }
-                return sum;
+                if (sum ==0)
+                {
+                    break;
+                }
             }
-        }
-    }
 
-    
+            
+            Console.WriteLine("Array is sorted in " + sum + " swaps.");
+            Console.WriteLine("First Element: " + a[0]);
+            Console.WriteLine("Last Element: " + a[a.Length-1]);
+
+        }
+        public static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+
+
+
+    }
 }
