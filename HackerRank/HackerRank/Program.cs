@@ -1,44 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HackerRank
 {
     internal class Program
     {
-        public static List<int> base2 = new List<int>();
-
         private static void Main()
         {
-            var myCalculator = new Calculator();
-            var T = int.Parse(Console.ReadLine());
-            while (T-- > 0)
+            // read the string s.
+            string s = Console.ReadLine();
+
+            // create the Solution class object p.
+            Solution obj = new Solution();
+
+            // push/enqueue all the characters of string s to stack.
+            foreach (char c in s)
             {
-                var num = Console.ReadLine().Split();
-                var n = int.Parse(num[0]);
-                var p = int.Parse(num[1]);
-                try
+                obj.pushCharacter(c);
+                obj.enqueueCharacter(c);
+            }
+
+            bool isPalindrome = true;
+
+            // pop the top character from stack.
+            // dequeue the first character from queue.
+            // compare both the characters.
+            for (int i = 0; i < s.Length / 2; i++)
+            {
+                if (obj.popCharacter() != obj.dequeueCharacter())
                 {
-                    var ans = myCalculator.power(n, p);
-                    Console.WriteLine(ans);
+                    isPalindrome = false;
+
+                    break;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+            }
+
+            // finally print whether string s is palindrome or not.
+            if (isPalindrome)
+            {
+                Console.Write("The word, {0}, is a palindrome.", s);
+            }
+            else
+            {
+                Console.Write("The word, {0}, is not a palindrome.", s);
             }
         }
     }
 
-    internal class Calculator
+    class Solution
     {
-        public int power(int i, int i1)
+        private Stack<char> _stack = new Stack<char>();
+        private Queue<char> _queue = new Queue<char>();
+        public void pushCharacter(char c)
         {
-            if (i < 0 || i1 < 0)
-            {
-                throw new Exception("n and p should be non-negative");
-            }
-            var r = Math.Pow(i, i1);
-            return (int)r;
+            _stack.Push(c);
+        }
+
+        public void enqueueCharacter(char c)
+        {
+            _queue.Enqueue(c);
+        }
+
+        public char popCharacter()
+        {
+            var temp = _stack.Peek();
+            _stack.Pop();
+            return temp;
+        }
+
+        public char dequeueCharacter()
+        {
+            var temp = _queue.Peek();
+            _queue.Dequeue();
+            return temp;
         }
     }
 }
