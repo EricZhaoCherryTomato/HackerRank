@@ -6,41 +6,19 @@ namespace HackerRank
     {
         private static void Main()
         {
-            int n = Convert.ToInt32(Console.ReadLine());
-            string[] a_temp = Console.ReadLine().Split(' ');
-            int[] a = Array.ConvertAll(a_temp, Int32.Parse);
-            int sum = 0;
-            for (int i = 0; i < a.Length; i++)
-            {
-                
-                for (int j = 0; j < a.Length-1; j++)
-                {
-                    if (a[j] > a[j+1])
-                    {
-                        Swap(ref a[j], ref a[j+1]);
-                        sum++;
-                    }
-                }
-                if (sum ==0)
-                {
-                    break;
-                }
-            }
+            int[] vInt = {1, 2, 3};
+            string[] vString = {"Hello", "World"};
 
-            
-            Console.WriteLine("Array is sorted in " + sum + " swaps.");
-            Console.WriteLine("First Element: " + a[0]);
-            Console.WriteLine("Last Element: " + a[a.Length-1]);
-
+            printArray<int>(vInt);
+            printArray<string>(vString);
         }
-        public static void Swap<T>(ref T lhs, ref T rhs)
+
+        private static void printArray<T>(T[] vArray)
         {
-            T temp = lhs;
-            lhs = rhs;
-            rhs = temp;
+            foreach (var t in vArray)
+            {
+                Console.WriteLine(t);
+            }
         }
-
-
-
     }
 }
