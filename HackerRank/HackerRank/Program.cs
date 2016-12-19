@@ -44,7 +44,7 @@ namespace HackerRank
             //Write your code here
             Queue<Node> q = new Queue<Node>();
             q.Enqueue(root);
-            while (q.Any())
+            while (q.Any()) 
             {
                 Node temp = q.Dequeue();
                 Console.Write(temp.data + " ");
