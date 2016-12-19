@@ -9,68 +9,77 @@ namespace HackerRank
     {
         private static void Main()
         {
-            Node root = null;
+            Node head = null;
             int T = Int32.Parse(Console.ReadLine());
             while (T-- > 0)
             {
                 int data = Int32.Parse(Console.ReadLine());
-                root = insert(root, data);
+                head = insert(head, data);
             }
-            levelOrder(root);
+            head = removeDuplicates(head);
+            display(head);
         }
-
-        private static Node insert(Node root, int data)
+        public static Node removeDuplicates(Node head)
         {
-            if (root == null)
+            //Write your code here
+            if (head?.next == null)
             {
-                return new Node(data);
+                return head;
             }
-            Node cur;
-            if (data <= root.data)
+            if (head.data == head.next.data)
             {
-                cur = insert(root.left, data);
-                root.left = cur;
+                head.next = head.next.next;
+                removeDuplicates(head);
             }
             else
             {
-                cur = insert(root.right, data);
-                root.right = cur;
+                removeDuplicates(head.next);
             }
-            return root;
-        }
+            return head;
 
-        static void levelOrder(Node root)
+        }
+        public static Node insert(Node head, int data)
         {
-            //Write your code here
-            Queue<Node> q = new Queue<Node>();
-            q.Enqueue(root);
-            while (q.Any())  
+            Node p = new Node(data);
+
+
+            if (head == null)
+                head = p;
+            else if (head.next == null)
+                head.next = p;
+            else
             {
-                Node temp = q.Dequeue();
-                Console.Write(temp.data + " ");
+                Node start = head;
+                while (start.next != null)
+                    start = start.next;
+                start.next = p;
 
-                if (temp.left != null)
-                {
-                    q.Enqueue(temp.left);
-                }
-                if (temp.right != null)
-                {
-                    q.Enqueue(temp.right);
-                }
             }
-
+            return head;
         }
+        public static void display(Node head)
+        {
+            Node start = head;
+            while (start != null)
+            {
+                Console.Write(start.data + " ");
+                start = start.next;
+            }
+        }
+
+
+
     }
 
-    internal class Node
+    class Node
     {
-        public Node left, right;
         public int data;
-
-        public Node(int data)
+        public Node next;
+        public Node(int d)
         {
-            this.data = data;
-            left = right = null;
+            data = d;
+            next = null;
         }
+
     }
 }
