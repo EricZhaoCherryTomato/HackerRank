@@ -44,10 +44,10 @@ namespace HackerRank
             //Write your code here
             Queue<Node> q = new Queue<Node>();
             q.Enqueue(root);
-            while (!q.Any())
+            while (q.Any())
             {
                 Node temp = q.Dequeue();
-                Console.WriteLine(temp.data);
+                Console.Write(temp.data + " ");
 
                 if (temp.left != null)
                 {
