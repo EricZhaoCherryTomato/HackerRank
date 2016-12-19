@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace HackerRank
@@ -8,14 +10,13 @@ namespace HackerRank
         private static void Main()
         {
             Node root = null;
-            var T = int.Parse(Console.ReadLine());
+            int T = Int32.Parse(Console.ReadLine());
             while (T-- > 0)
             {
-                var data = int.Parse(Console.ReadLine());
+                int data = Int32.Parse(Console.ReadLine());
                 root = insert(root, data);
             }
-            var height = getHeight(root);
-            Console.WriteLine(height);
+            levelOrder(root);
         }
 
         private static Node insert(Node root, int data)
@@ -38,20 +39,26 @@ namespace HackerRank
             return root;
         }
 
-        private static int getHeight(Node root)
+        static void levelOrder(Node root)
         {
-            int leftHeight = 0;
-            int rightHeight = 0;
+            //Write your code here
+            Queue<Node> q = new Queue<Node>();
+            q.Enqueue(root);
+            while (!q.Any())
+            {
+                Node temp = q.Dequeue();
+                Console.WriteLine(temp.data);
 
-            if (root.left != null)
-            {
-                leftHeight = getHeight(root.left) + 1;
+                if (temp.left != null)
+                {
+                    q.Enqueue(temp.left);
+                }
+                if (temp.right != null)
+                {
+                    q.Enqueue(temp.right);
+                }
             }
-            if (root.right != null)
-            {
-                rightHeight = getHeight(root.right) + 1;
-            }
-            return leftHeight > rightHeight ? leftHeight : rightHeight;
+
         }
     }
 
