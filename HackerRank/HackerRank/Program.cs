@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace HackerRank
 {
@@ -9,77 +6,30 @@ namespace HackerRank
     {
         private static void Main()
         {
-            Node head = null;
-            int T = Int32.Parse(Console.ReadLine());
-            while (T-- > 0)
-            {
-                int data = Int32.Parse(Console.ReadLine());
-                head = insert(head, data);
-            }
-            head = removeDuplicates(head);
-            display(head);
-        }
-        public static Node removeDuplicates(Node head)
-        {
-            //Write your code here
-            if (head?.next == null)
-            {
-                return head;
-            }
-            if (head.data == head.next.data)
-            {
-                head.next = head.next.next;
-                removeDuplicates(head);
-            }
-            else
-            {
-                removeDuplicates(head.next);
-            }
-            return head;
+            var n = Convert.ToInt32(Console.ReadLine());
 
-        }
-        public static Node insert(Node head, int data)
-        {
-            Node p = new Node(data);
-
-
-            if (head == null)
-                head = p;
-            else if (head.next == null)
-                head.next = p;
-            else
+            for (var i = 0; i < n; i++)
             {
-                Node start = head;
-                while (start.next != null)
-                    start = start.next;
-                start.next = p;
-
-            }
-            return head;
-        }
-        public static void display(Node head)
-        {
-            Node start = head;
-            while (start != null)
-            {
-                Console.Write(start.data + " ");
-                start = start.next;
+                var flag = true;
+                var inputs = Convert.ToInt32(Console.ReadLine());
+                for (var j = 2; j*j <= inputs; j++)
+                {
+                    if (inputs%j == 0)
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (inputs == 1)
+                {
+                    flag = false;
+                }
+                if (n == 2)
+                {
+                    flag = true;
+                }
+                Console.WriteLine(flag ? "Prime" : "Not prime");
             }
         }
-
-
-
-    }
-
-    class Node
-    {
-        public int data;
-        public Node next;
-        public Node(int d)
-        {
-            data = d;
-            next = null;
-        }
-
     }
 }
