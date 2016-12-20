@@ -6,30 +6,30 @@ namespace HackerRank
     {
         private static void Main()
         {
-            var n = Convert.ToInt32(Console.ReadLine());
+            var actualReturn = Console.ReadLine()?.Split(' ');
+            var expectedReturn = Console.ReadLine()?.Split(' ');
 
-            for (var i = 0; i < n; i++)
+            var diffYear = Convert.ToInt32(actualReturn?[2]) - Convert.ToInt32(expectedReturn?[2]);
+
+            if (Convert.ToInt32(actualReturn?[2]) > Convert.ToInt32(expectedReturn?[2]))
             {
-                var flag = true;
-                var inputs = Convert.ToInt32(Console.ReadLine());
-                for (var j = 2; j*j <= inputs; j++)
-                {
-                    if (inputs%j == 0)
-                    {
-                        flag = false;
-                        break;
-                    }
-                }
-                if (inputs == 1)
-                {
-                    flag = false;
-                }
-                if (n == 2)
-                {
-                    flag = true;
-                }
-                Console.WriteLine(flag ? "Prime" : "Not prime");
+                Console.WriteLine("10000");
+            }
+            else if ((Convert.ToInt32(actualReturn?[1]) > Convert.ToInt32(expectedReturn?[1])) && diffYear == 0)
+            {
+                var r =(Convert.ToInt32(actualReturn?[1]) - Convert.ToInt32(expectedReturn?[1])) * 500;
+                Console.WriteLine(r);
+            }
+            else if ((Convert.ToInt32(actualReturn?[0]) > Convert.ToInt32(expectedReturn?[0])) && diffYear == 0)
+            {
+                var r = (Convert.ToInt32(actualReturn?[0]) - Convert.ToInt32(expectedReturn?[0])) * 15;
+                Console.WriteLine(r);
+            }
+            else
+            {
+                Console.WriteLine(0);
+            }
+            
             }
         }
     }
-}
