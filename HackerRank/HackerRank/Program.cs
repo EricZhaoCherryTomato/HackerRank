@@ -9,27 +9,42 @@ namespace HackerRank
             var actualReturn = Console.ReadLine()?.Split(' ');
             var expectedReturn = Console.ReadLine()?.Split(' ');
 
-            var diffYear = Convert.ToInt32(actualReturn?[2]) - Convert.ToInt32(expectedReturn?[2]);
+            var actualReturnDate = new BookReturnDate(Convert.ToInt32(actualReturn?[0]), Convert.ToInt32(actualReturn?[1]), Convert.ToInt32(actualReturn?[2]));
+            var expectReturnDate = new BookReturnDate(Convert.ToInt32(expectedReturn?[0]), Convert.ToInt32(expectedReturn?[1]), Convert.ToInt32(expectedReturn?[2]));
 
-            if (Convert.ToInt32(actualReturn?[2]) > Convert.ToInt32(expectedReturn?[2]))
+            var fine = 0;
+
+            if (actualReturnDate.Year == expectReturnDate.Year)
             {
-                Console.WriteLine("10000");
+                if (actualReturnDate.Month > expectReturnDate.Month)
+                {
+                    fine = (actualReturnDate.Month - expectReturnDate.Month)*500;
+                }
+                else if ((actualReturnDate.Month == expectReturnDate.Month)
+                         && actualReturnDate.Day > expectReturnDate.Day)
+                {
+                    fine = (actualReturnDate.Day - expectReturnDate.Day)*15;
+                }
             }
-            else if ((Convert.ToInt32(actualReturn?[1]) > Convert.ToInt32(expectedReturn?[1])) && diffYear == 0)
+            if (actualReturnDate.Year > expectReturnDate.Year)
             {
-                var r =(Convert.ToInt32(actualReturn?[1]) - Convert.ToInt32(expectedReturn?[1])) * 500;
-                Console.WriteLine(r);
+                fine = 10000;
             }
-            else if ((Convert.ToInt32(actualReturn?[0]) > Convert.ToInt32(expectedReturn?[0])) && diffYear == 0)
+            Console.WriteLine(fine);
+        }
+
+        class BookReturnDate
+        {
+            public int Day;
+            public int Month;
+            public int Year;
+
+            public BookReturnDate(int day, int month, int year)
             {
-                var r = (Convert.ToInt32(actualReturn?[0]) - Convert.ToInt32(expectedReturn?[0])) * 15;
-                Console.WriteLine(r);
-            }
-            else
-            {
-                Console.WriteLine(0);
-            }
-            
+                Day = day;
+                Month = month;
+                Year = year;
             }
         }
     }
+}
