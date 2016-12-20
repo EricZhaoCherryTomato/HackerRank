@@ -35,9 +35,9 @@ namespace HackerRank
 
         class BookReturnDate
         {
-            public int Day;
-            public int Month;
-            public int Year;
+            public readonly int Day;
+            public readonly int Month;
+            public readonly int Year;
 
             public BookReturnDate(int day, int month, int year)
             {
