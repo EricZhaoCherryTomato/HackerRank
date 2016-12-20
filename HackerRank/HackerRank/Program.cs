@@ -8,26 +8,14 @@ namespace HackerRank
     {
         private static void Main()
         {
-            int t = Convert.ToInt32(Console.ReadLine());
-            for (int a0 = 0; a0 < t; a0++)
+            //print all the odd number using bitwise operation
+            for (int i = 0; i < 100; ++i)
             {
-                string[] tokens_n = Console.ReadLine().Split(' ');
-                int n = Convert.ToInt32(tokens_n[0]);
-                int k = Convert.ToInt32(tokens_n[1]);
-
-                int finalResult = 0;
-                for (int i = 1; i < n; i++)
+                if ((i & 1) == 1)
                 {
-                    for (int j = i + 1; j <= n; j++)
-                    {
-                        int amp = i & j;
-                        if (amp < k && amp > finalResult)
-                            finalResult = amp;
-                    }
+                     Console.WriteLine(i);
                 }
-                Console.WriteLine(finalResult);
             }
-
         }
     }
 }
