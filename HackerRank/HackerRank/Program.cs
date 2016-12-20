@@ -8,28 +8,26 @@ namespace HackerRank
     {
         private static void Main()
         {
-            var N = Convert.ToInt32(Console.ReadLine());
-            var pattern = ".+@gmail\\.com$";
-            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            var r = new List<string>();
-            for (var a0 = 0; a0 < N; a0++)
+            int t = Convert.ToInt32(Console.ReadLine());
+            for (int a0 = 0; a0 < t; a0++)
             {
-                var tokens_firstName = Console.ReadLine().Split(' ');
-                var firstName = tokens_firstName[0];
-                var emailID = tokens_firstName[1];
+                string[] tokens_n = Console.ReadLine().Split(' ');
+                int n = Convert.ToInt32(tokens_n[0]);
+                int k = Convert.ToInt32(tokens_n[1]);
 
-                var matcher = rgx.Match(emailID);
-                if (matcher.Success)
+                int finalResult = 0;
+                for (int i = 1; i < n; i++)
                 {
-                    r.Add(firstName);
+                    for (int j = i + 1; j <= n; j++)
+                    {
+                        int amp = i & j;
+                        if (amp < k && amp > finalResult)
+                            finalResult = amp;
+                    }
                 }
+                Console.WriteLine(finalResult);
             }
-            r.Sort();
-            foreach (var email in r)
-            {
-                Console.WriteLine(email);
-            }
-           
+
         }
     }
 }
