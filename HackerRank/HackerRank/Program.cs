@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace HackerRank
 {
@@ -6,45 +8,28 @@ namespace HackerRank
     {
         private static void Main()
         {
-            var actualReturn = Console.ReadLine()?.Split(' ');
-            var expectedReturn = Console.ReadLine()?.Split(' ');
-
-            var actualReturnDate = new BookReturnDate(Convert.ToInt32(actualReturn?[0]), Convert.ToInt32(actualReturn?[1]), Convert.ToInt32(actualReturn?[2]));
-            var expectReturnDate = new BookReturnDate(Convert.ToInt32(expectedReturn?[0]), Convert.ToInt32(expectedReturn?[1]), Convert.ToInt32(expectedReturn?[2]));
-
-            var fine = 0;
-
-            if (actualReturnDate.Year == expectReturnDate.Year)
+            var N = Convert.ToInt32(Console.ReadLine());
+            var pattern = ".+@gmail\\.com$";
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            var r = new List<string>();
+            for (var a0 = 0; a0 < N; a0++)
             {
-                if (actualReturnDate.Month > expectReturnDate.Month)
+                var tokens_firstName = Console.ReadLine().Split(' ');
+                var firstName = tokens_firstName[0];
+                var emailID = tokens_firstName[1];
+
+                var matcher = rgx.Match(emailID);
+                if (matcher.Success)
                 {
-                    fine = (actualReturnDate.Month - expectReturnDate.Month)*500;
-                }
-                else if ((actualReturnDate.Month == expectReturnDate.Month)
-                         && actualReturnDate.Day > expectReturnDate.Day)
-                {
-                    fine = (actualReturnDate.Day - expectReturnDate.Day)*15;
+                    r.Add(firstName);
                 }
             }
-            if (actualReturnDate.Year > expectReturnDate.Year)
+            r.Sort();
+            foreach (var email in r)
             {
-                fine = 10000;
+                Console.WriteLine(email);
             }
-            Console.WriteLine(fine);
-        }
-
-        class BookReturnDate
-        {
-            public readonly int Day;
-            public readonly int Month;
-            public readonly int Year;
-
-            public BookReturnDate(int day, int month, int year)
-            {
-                Day = day;
-                Month = month;
-                Year = year;
-            }
+           
         }
     }
 }
