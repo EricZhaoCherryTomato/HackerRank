@@ -19,16 +19,30 @@ namespace HackerRank
             int k = Convert.ToInt32(tokens_n[1]);
             string[] a_temp = Console.ReadLine().Split(' ');
             int[] a = Array.ConvertAll(a_temp, Int32.Parse);
-            for (int i = 0; i < n; i++)
-            {
-                int newLocation = (i + (n - k)) % n;
-                a[newLocation] = a[i];
-            }
-            foreach (var i in a)
+            int[] r = new int[n];
+
+            r = rotateArray(a, k);
+
+            foreach (var i in r)
             {
                 Console.Write(i + " ");
             }
 
+        }
+
+        public static int[] rotateArray(int[] arr, int d)
+        {
+            // Because the constraints state d < n, we need not concern ourselves with shifting > n units.
+            int n = arr.Length;
+
+            // Create new array for rotated elements:
+            int[] rotated = new int[n];
+
+            // Copy segments of shifted elements to rotated array:
+            Array.Copy(arr, d, rotated, 0, n - d);
+            Array.Copy(arr, 0, rotated, n - d, d);
+
+            return rotated;
         }
     }
 }
