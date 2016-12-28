@@ -5,11 +5,11 @@ namespace MemoryLeak
 {
     public class Program
     {
-        private static EventRaiser raiser;
+        private static EventRaiser _raiser;
 
         private static void Main(string[] args)
         {
-            raiser = new EventRaiser();
+            _raiser = new EventRaiser();
             for (var i = 0; i < 1000; i++)
             {
                 CreateLeak();
@@ -20,7 +20,7 @@ namespace MemoryLeak
 
         private static void CreateLeak()
         {
-            var memoryLeak = new MemoryLeak(raiser);
+            var memoryLeak = new MemoryLeak(_raiser);
             memoryLeak = null;
             GC.Collect();
             var memory = GC.GetTotalMemory(true);
@@ -30,21 +30,18 @@ namespace MemoryLeak
 
     public class EventRaiser
     {
-        private string stringValue;
+        private string _stringValue;
         public event EventHandler StringValueChanged;
 
         public string StringValue
         {
-            get { return stringValue; }
+            get { return _stringValue; }
             set
             {
-                if (stringValue != value)
+                if (_stringValue != value)
                 {
-                    stringValue = value;
-                    if (StringValueChanged != null)
-                    {
-                        StringValueChanged(this, new EventArgs());
-                    }
+                    _stringValue = value;
+                    StringValueChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -52,8 +49,8 @@ namespace MemoryLeak
 
     public class MemoryLeak
     {
-        private byte[] allocatedMemory;
-        private EventRaiser raiser;
+        private byte[] _allocatedMemory;
+        private EventRaiser _raiser;
 
         private void raiser_StringValueChanged(object sender, EventArgs e)
         {
@@ -61,8 +58,8 @@ namespace MemoryLeak
 
         public MemoryLeak(EventRaiser raiser)
         {
-            this.raiser = raiser;
-            allocatedMemory = new byte[10000];
+            this._raiser = raiser;
+            _allocatedMemory = new byte[10000];
             raiser.StringValueChanged += raiser_StringValueChanged;
         }
     }
