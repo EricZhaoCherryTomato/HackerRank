@@ -21,6 +21,7 @@ namespace MemoryLeak
         private static void CreateLeak()
         {
             var memoryLeak = new MemoryLeak(_raiser);
+            memoryLeak.Dispose();//Call dispose method before set memory to null
             memoryLeak = null;
             GC.Collect();
             var memory = GC.GetTotalMemory(true);
@@ -47,7 +48,7 @@ namespace MemoryLeak
         }
     }
 
-    public class MemoryLeak
+    public class MemoryLeak :IDisposable
     {
         private byte[] _allocatedMemory;
         private EventRaiser _raiser;
@@ -61,6 +62,11 @@ namespace MemoryLeak
             this._raiser = raiser;
             _allocatedMemory = new byte[10000];
             raiser.StringValueChanged += raiser_StringValueChanged;
+        }
+        //Fix the memory leak
+        public void Dispose()
+        {
+            this._raiser.StringValueChanged -= this.raiser_StringValueChanged;
         }
     }
 }
